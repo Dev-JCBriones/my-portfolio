@@ -20,6 +20,9 @@ import { ResumeModal } from './components/ResumeModal';
 import { BookingModal } from './components/BookingModal';
 import { DeliveryStandardsSection } from './components/DeliveryStandardsSection';
 import { DynamicParticleBackground } from './components/DynamicParticleBackground';
+import { ScrollToTop } from './components/ScrollToTop';
+import { MobileBottomBar } from './components/MobileBottomBar';
+import { GlobalToast } from './components/GlobalToast';
 
 function PortfolioApp() {
   const [currentView, setCurrentView] = useState<'home' | 'work' | 'project'>('home');
@@ -164,6 +167,17 @@ function PortfolioApp() {
 
       {/* Global Footer */}
       <FooterSection onNavigate={handleNavigate} />
+
+      {/* Floating Scroll-to-Top Button with circular progress */}
+      <ScrollToTop />
+
+      {/* Mobile Floating Action Bar */}
+      {currentView === 'home' && (
+        <MobileBottomBar onContactClick={() => scrollToSection('contact')} />
+      )}
+
+      {/* Global Feedback Toast */}
+      <GlobalToast />
     </div>
   );
 }

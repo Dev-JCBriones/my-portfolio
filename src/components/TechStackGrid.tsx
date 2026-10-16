@@ -26,7 +26,7 @@ import { TechSkill } from '../types/portfolio';
 import { useTheme } from '../context/ThemeContext';
 
 export const TechStackGrid: React.FC = () => {
-  const { playSound } = useTheme();
+  const { playSound, showToast } = useTheme();
   const [filter, setFilter] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'matrix' | 'blueprint'>('matrix');
   const [selectedSkill, setSelectedSkill] = useState<TechSkill | null>(techSkills[0]);
@@ -39,6 +39,11 @@ export const TechStackGrid: React.FC = () => {
     'Tools & Environments',
     'Frontend & Integration',
   ];
+
+  const getCategoryCount = (cat: string) => {
+    if (cat === 'All') return techSkills.length;
+    return techSkills.filter((s) => s.category === cat).length;
+  };
 
   const getIcon = (iconName: string) => {
     switch (iconName) {
@@ -62,6 +67,7 @@ export const TechStackGrid: React.FC = () => {
     playSound('pop');
     navigator.clipboard.writeText(codeText);
     setCopiedCode(true);
+    showToast('Code blueprint copied to clipboard!', 'copy');
     setTimeout(() => setCopiedCode(false), 1800);
   };
 
@@ -115,22 +121,35 @@ export const TechStackGrid: React.FC = () => {
         <>
           {/* Category Filter Tabs */}
           <div className="flex flex-wrap items-center gap-1.5 mb-8">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  playSound('click');
-                  setFilter(cat);
-                }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium tracking-wide transition-all cursor-pointer ${
-                  filter === cat
-                    ? 'bg-[#111111] dark:bg-[#FAF7F3] text-[#FAF7F3] dark:text-[#111111] font-semibold shadow-sm'
-                    : 'bg-black/[0.03] dark:bg-white/[0.04] text-[#111111]/70 dark:text-[#FAF7F3]/70 hover:text-[#111111] dark:hover:text-[#FAF7F3] border border-black/5 dark:border-white/5'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            {categories.map((cat) => {
+              const count = getCategoryCount(cat);
+              const isSelected = filter === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    playSound('click');
+                    setFilter(cat);
+                  }}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium tracking-wide transition-all cursor-pointer flex items-center gap-1.5 ${
+                    isSelected
+                      ? 'bg-[#111111] dark:bg-[#FAF7F3] text-[#FAF7F3] dark:text-[#111111] font-semibold shadow-sm'
+                      : 'bg-black/[0.03] dark:bg-white/[0.04] text-[#111111]/70 dark:text-[#FAF7F3]/70 hover:text-[#111111] dark:hover:text-[#FAF7F3] border border-black/5 dark:border-white/5'
+                  }`}
+                >
+                  <span>{cat}</span>
+                  <span
+                    className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full tabular-nums leading-none ${
+                      isSelected
+                        ? 'bg-black/20 dark:bg-black/20 text-white dark:text-[#111111] font-bold'
+                        : 'bg-white/10 text-white/50'
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           {/* Main 2-Column Split: Interactive Cards on Left + Live Architecture Inspector on Right */}

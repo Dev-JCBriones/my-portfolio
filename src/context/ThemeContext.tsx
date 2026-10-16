@@ -14,6 +14,8 @@ interface ThemeContextType {
   setResumeOpen: (open: boolean) => void;
   bookingOpen: boolean;
   setBookingOpen: (open: boolean) => void;
+  toast: { message: string; type?: 'check' | 'copy' | 'info' } | null;
+  showToast: (message: string, type?: 'check' | 'copy' | 'info') => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -28,6 +30,15 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [searchOpen, setSearchOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type?: 'check' | 'copy' | 'info' } | null>(null);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => {
+      setToast(null);
+    }, 2400);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   useEffect(() => {
     localStorage.setItem('devjc_theme', 'dark');
@@ -120,6 +131,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const showToast = (message: string, type: 'check' | 'copy' | 'info' = 'check') => {
+    setToast({ message, type });
+    playSound('pop');
+  };
+
   return (
     <ThemeContext.Provider
       value={{
@@ -134,6 +150,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setResumeOpen,
         bookingOpen,
         setBookingOpen,
+        toast,
+        showToast,
       }}
     >
       {children}

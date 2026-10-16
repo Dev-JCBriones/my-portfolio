@@ -15,19 +15,42 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
     toggleSound, 
     playSound, 
     setSearchOpen, 
-    setResumeOpen 
+    setResumeOpen,
+    showToast 
   } = useTheme();
 
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('hero-section');
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Section ScrollSpy for dynamic nav link indicator
+  useEffect(() => {
+    if (currentView !== 'home') return;
+
+    const sectionIds = ['hero-section', 'tech-stack', 'api-sandbox', 'services', 'contact'];
+    const handleScrollSpy = () => {
+      const scrollPos = window.scrollY + 220;
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveSection(sectionIds[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollSpy, { passive: true });
+    handleScrollSpy();
+    return () => window.removeEventListener('scroll', handleScrollSpy);
+  }, [currentView]);
 
   // Close drawer on escape
   useEffect(() => {
@@ -40,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
 
   const primaryNavItems = [
     { label: 'Home', view: 'home' as const, id: 'hero-section' },
-    { label: 'Skills & Architecture', view: 'home' as const, id: 'tech-stack' },
+    { label: 'Skills', view: 'home' as const, id: 'tech-stack' },
     { label: 'API Sandbox', view: 'home' as const, id: 'api-sandbox' },
     { label: 'Works', view: 'work' as const, id: 'work-section' },
     { label: 'Services', view: 'home' as const, id: 'services' },
@@ -57,6 +80,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
     playSound('click');
     setIsOpen(false);
     onNavigate(view, id);
+  };
+
+  const handleToggleSound = () => {
+    toggleSound();
+    showToast(soundEnabled ? 'Audio feedback muted' : 'Audio feedback enabled', 'info');
   };
 
   return (
@@ -88,20 +116,27 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
           </button>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-7">
+          <nav className="hidden md:flex items-center gap-3.5 lg:gap-6 xl:gap-7">
             {primaryNavItems.map((item) => {
-              const isActive = currentView === item.view && (currentView === 'work' ? true : false);
+              const isActive =
+                currentView === 'work'
+                  ? item.view === 'work'
+                  : currentView === 'home' && activeSection === item.id;
+
               return (
                 <button
                   key={item.label}
                   onClick={() => handleItemClick(item.view, item.id)}
-                  className={`text-xs xl:text-sm font-medium tracking-wide transition-all cursor-pointer relative py-1 ${
+                  className={`text-xs xl:text-sm font-medium tracking-wide transition-all cursor-pointer relative py-1 flex items-center gap-1.5 ${
                     isActive
-                      ? 'text-[#FAF7F3] font-semibold'
-                      : 'text-[#FAF7F3]/70 hover:text-[#FAF7F3]'
+                      ? 'text-white font-semibold'
+                      : 'text-[#FAF7F3]/65 hover:text-[#FAF7F3]'
                   }`}
                 >
-                  {item.label}
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  )}
+                  <span>{item.label}</span>
                 </button>
               );
             })}
@@ -124,7 +159,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
 
             {/* Sound Toggle */}
             <button
-              onClick={toggleSound}
+              onClick={handleToggleSound}
               title={`Audio feedback: ${soundEnabled ? 'Enabled' : 'Disabled'}`}
               className="p-1.5 sm:p-2 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 hover:text-white transition-colors cursor-pointer"
             >
@@ -248,7 +283,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                 </button>
 
                 <button
-                  onClick={toggleSound}
+                  onClick={handleToggleSound}
                   className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 transition-colors cursor-pointer gap-1"
                 >
                   {soundEnabled ? (

@@ -36,7 +36,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) =>
     soundEnabled, 
     toggleSound, 
     playSound, 
-    setResumeOpen 
+    setResumeOpen,
+    showToast 
   } = useTheme();
 
   const [query, setQuery] = useState('');
@@ -57,6 +58,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) =>
     navigator.clipboard.writeText('brionesjc050@gmail.com');
     setCopiedEmail(true);
     playSound('click');
+    showToast('Email copied to clipboard!', 'copy');
     setTimeout(() => {
       setCopiedEmail(false);
       setSearchOpen(false);
@@ -175,6 +177,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) =>
       icon: soundEnabled ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />,
       action: () => {
         toggleSound();
+        showToast(soundEnabled ? 'Audio feedback muted' : 'Audio feedback enabled', 'info');
         setSearchOpen(false);
       }
     },

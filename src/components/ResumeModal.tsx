@@ -6,7 +6,7 @@ import { bioData, experienceTimeline, techSkills } from '../data/portfolioData';
 import avatarFront from '../assets/images/avatar_front.png';
 
 export const ResumeModal: React.FC = () => {
-  const { resumeOpen, setResumeOpen, playSound } = useTheme();
+  const { resumeOpen, setResumeOpen, playSound, showToast } = useTheme();
   const [copied, setCopied] = useState(false);
 
   if (!resumeOpen) return null;
@@ -40,6 +40,7 @@ Tech: ${exp.technologies.join(', ')}
 
     navigator.clipboard.writeText(textResume);
     setCopied(true);
+    showToast('CV text copied to clipboard!', 'copy');
     setTimeout(() => setCopied(false), 2000);
   };
 

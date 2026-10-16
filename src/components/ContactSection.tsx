@@ -31,7 +31,7 @@ const YouTubeIcon = () => (
 );
 
 export const ContactSection: React.FC = () => {
-  const { playSound, setBookingOpen } = useTheme();
+  const { playSound, setBookingOpen, showToast } = useTheme();
   const [projectType, setProjectType] = useState<string>('Backend & API');
   const [formData, setFormData] = useState({
     name: '',
@@ -57,10 +57,18 @@ export const ContactSection: React.FC = () => {
     'Technical Consultation'
   ];
 
+  const quickTemplates = [
+    { label: 'Laravel & REST API', text: 'Hi JC, we are looking for a software engineer to design and develop robust backend APIs with PHP (Laravel) and database architecture.' },
+    { label: 'Database Optimization', text: 'Hi JC, we need an experienced engineer to inspect, index, and tune our PostgreSQL / MySQL database queries for peak throughput.' },
+    { label: 'Full-Stack Web App', text: 'Hi JC, we have a platform build and need end-to-end engineering from server-side logic to clean frontend UI.' },
+    { label: 'Qatar Onsite / Relocation', text: 'Hi JC, we have an exciting engineering opportunity open for onsite / international employment and would like to connect.' },
+  ];
+
   const handleCopyEmail = () => {
     playSound('pop');
     navigator.clipboard.writeText(bioData.email);
     setCopiedEmail(true);
+    showToast(`Email copied: ${bioData.email}`, 'copy');
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
@@ -499,7 +507,43 @@ export const ContactSection: React.FC = () => {
                     <label className="block text-sm font-medium text-[#FAF7F3]">
                       Your Project <span className="text-red-400 font-bold">*</span>
                     </label>
-                    <span className="text-[11px] text-white/40 font-mono">Required</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] text-white/40 font-mono tabular-nums">
+                        {formData.project.length} chars
+                      </span>
+                      <span className="text-[11px] text-white/30">•</span>
+                      <span className="text-[11px] text-white/40 font-mono">Required</span>
+                    </div>
+                  </div>
+
+                  {/* Quick message pre-fill chips */}
+                  <div className="mb-2.5">
+                    <span className="text-[11px] font-mono text-white/50 block mb-1.5">
+                      Quick Suggestions (click to auto-fill):
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {quickTemplates.map((item) => (
+                        <button
+                          type="button"
+                          key={item.label}
+                          onClick={() => {
+                            playSound('click');
+                            setFormData((prev) => ({ ...prev, project: item.text }));
+                            if (errors.project) {
+                              setErrors((prev) => {
+                                const next = { ...prev };
+                                delete next.project;
+                                return next;
+                              });
+                            }
+                            showToast(`Template loaded: ${item.label}`, 'info');
+                          }}
+                          className="px-2.5 py-1 rounded-md text-[11px] font-medium bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-white/5 transition-all cursor-pointer active:scale-95"
+                        >
+                          + {item.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                   <textarea
                     required

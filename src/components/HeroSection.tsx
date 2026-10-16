@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Clock, Globe, Calendar, ArrowUpRight, Code2, Server, Database, ChevronDown } from 'lucide-react';
+import { Clock, Globe, Calendar, ArrowUpRight, Code2, Server, Database, ChevronDown, Copy, Check, Mail } from 'lucide-react';
 import { bioData } from '../data/portfolioData';
 import { useTheme } from '../context/ThemeContext';
 
 export const HeroSection: React.FC = () => {
-  const { setBookingOpen, playSound } = useTheme();
+  const { setBookingOpen, playSound, showToast } = useTheme();
 
   // Live Philippine Time (UTC+8)
   const [phTime, setPhTime] = useState<string>('');
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = () => {
+    playSound('pop');
+    navigator.clipboard.writeText(bioData.email);
+    setCopiedEmail(true);
+    showToast(`Email copied: ${bioData.email}`, 'copy');
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   useEffect(() => {
     const updateTime = () => {
@@ -65,10 +74,25 @@ export const HeroSection: React.FC = () => {
         </div>
 
         {/* Global Remote & Relocation Readiness */}
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-xs font-medium text-emerald-800 dark:text-emerald-300 border border-emerald-500/20">
-          <Globe className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-xs font-medium text-emerald-300 border border-emerald-500/20">
+          <Globe className="w-3.5 h-3.5 text-emerald-400" />
           <span>Open to Global Remote & Relocation</span>
         </div>
+
+        {/* Quick Copy Email Pill */}
+        <button
+          onClick={handleCopyEmail}
+          title="Click to copy email address"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 text-xs font-mono text-[#FAF7F3]/90 hover:text-white border border-white/10 shadow-xs transition-all cursor-pointer active:scale-95 group"
+        >
+          <Mail className="w-3.5 h-3.5 text-amber-400/90 group-hover:text-amber-300" />
+          <span>{bioData.email}</span>
+          {copiedEmail ? (
+            <Check className="w-3 h-3 text-emerald-400" />
+          ) : (
+            <Copy className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity" />
+          )}
+        </button>
       </motion.div>
 
       {/* Main Hero Typography & Engineering Focus */}

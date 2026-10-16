@@ -5,10 +5,11 @@ import { interactiveEndpoints } from '../data/portfolioData';
 import { useTheme } from '../context/ThemeContext';
 
 export const ArchitectureSandbox: React.FC = () => {
-  const { playSound } = useTheme();
+  const { playSound, showToast } = useTheme();
   const [selectedEndpoint, setSelectedEndpoint] = useState(interactiveEndpoints[0]);
   const [isLoading, setIsLoading] = useState(false);
   const [copiedCurl, setCopiedCurl] = useState(false);
+  const [copiedJson, setCopiedJson] = useState(false);
   const [executionTime, setExecutionTime] = useState<number>(24);
   const [activeTab, setActiveTab] = useState<'response' | 'headers' | 'curl'>('response');
 
@@ -30,7 +31,16 @@ export const ArchitectureSandbox: React.FC = () => {
   -H "Authorization: Bearer sanctum_demo_token"`;
     navigator.clipboard.writeText(curl);
     setCopiedCurl(true);
+    showToast('cURL request copied to clipboard!', 'copy');
     setTimeout(() => setCopiedCurl(false), 1500);
+  };
+
+  const copyResponseJson = () => {
+    playSound('pop');
+    navigator.clipboard.writeText(JSON.stringify(selectedEndpoint.response, null, 2));
+    setCopiedJson(true);
+    showToast('Response JSON payload copied!', 'copy');
+    setTimeout(() => setCopiedJson(false), 1500);
   };
 
   // High-craft syntax highlighter for JSON
@@ -116,10 +126,29 @@ export const ArchitectureSandbox: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={copyResponseJson}
+              title="Copy JSON Response payload"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono bg-white/5 hover:bg-white/15 text-white/80 transition-colors cursor-pointer border border-white/5 active:scale-95"
+            >
+              {copiedJson ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="text-emerald-400">JSON Copied</span>
+                </>
+              ) : (
+                <>
+                  <Code2 className="w-3.5 h-3.5 text-white/60" />
+                  <span>Copy JSON</span>
+                </>
+              )}
+            </button>
+
             <button
               onClick={copyCurl}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono bg-white/5 hover:bg-white/15 text-white/80 transition-colors cursor-pointer border border-white/5 active:scale-95"
+              title="Copy cURL command"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono bg-white/5 hover:bg-white/15 text-white/80 transition-colors cursor-pointer border border-white/5 active:scale-95"
             >
               {copiedCurl ? (
                 <>
