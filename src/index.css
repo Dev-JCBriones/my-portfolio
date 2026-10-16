@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-archivo: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-archivo);
+    background-color: #FAF7F3;
+    color: #111111;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  html.dark body {
+    background-color: #0E0E0E;
+    color: #FAF7F3;
+  }
+}
+
+/* Hide all scrollbars globally across all browsers while retaining scroll function */
+*, *::before, *::after, html, body, #root {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE 10+ and Edge */
+}
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera, Edge */
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+}
+
+/* 3D Flip Card Utilities */
+.perspective-1200 {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+/* Rolling Text Animation */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+}
+
+@keyframes floatReverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(10px) rotate(-3deg);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatReverse 7s ease-in-out infinite;
+}
+
+/* Subtle background noise texture */
+.bg-noise {
+  background-image: url('./assets/images/noise_texture.png');
+  background-repeat: repeat;
+}
+
+/* TeleworkX Backlit filter effect */
+.backlit {
+  filter: url(#backlit);
+  -webkit-filter: url(#backlit);
+}
+
+/* ============================================================
+   Scroll-Driven Text Reveal by Denis Gusev (CodePen dygLbqJ)
+   Smooth word-by-word illumination on scroll [GSAP + Lenis Style]
+   ============================================================ */
+.gusev-word {
+  display: inline-block;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+  will-change: opacity, transform;
+}
+
+.gusev-word-revealed {
+  color: #111111;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+html.dark .gusev-word-revealed {
+  color: #FAF7F3;
+  text-shadow: 0 0 8px rgba(250, 247, 243, 0.2);
+}
+
+

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dev JC — Software Engineer Portfolio</title>
+    <meta name="description" content="Software engineer and Framer creator with a strong focus on building modern, scalable, and conversion-driven web experiences." />
+    <meta property="og:title" content="Dev JC — Software Engineer Portfolio" />
+    <meta property="og:description" content="Software engineer and Framer creator with a strong focus on building modern, scalable, and conversion-driven web experiences." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="/src/assets/images/favicon_light.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="/src/assets/images/favicon_dark.png" media="(prefers-color-scheme: dark)" />
+    <!-- Archivo Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+    <script>
+      try {
+        const theme = localStorage.getItem('devjc_theme');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="antialiased selection:bg-[#111111] selection:text-[#FAF7F3]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
