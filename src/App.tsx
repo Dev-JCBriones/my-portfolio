@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { BioSection } from './components/BioSection';
@@ -22,7 +22,6 @@ import { DeliveryStandardsSection } from './components/DeliveryStandardsSection'
 import { DynamicParticleBackground } from './components/DynamicParticleBackground';
 
 function PortfolioApp() {
-  const { theme } = useTheme();
   const [currentView, setCurrentView] = useState<'home' | 'work' | 'project'>('home');
   const [selectedProjectId, setSelectedProjectId] = useState<string>('teleworkx-ai');
 
@@ -53,13 +52,7 @@ function PortfolioApp() {
   };
 
   return (
-    <div
-      className={`relative min-h-screen font-sans overflow-x-hidden transition-colors duration-300 ${
-        theme === 'dark'
-          ? 'bg-[#0E0E0E] text-[#FAF7F3] selection:bg-[#FAF7F3] selection:text-[#111111]'
-          : 'bg-[#FAF7F3] text-[#111111] selection:bg-[#111111] selection:text-[#FAF7F3]'
-      }`}
-    >
+    <div className="relative min-h-screen font-sans overflow-x-hidden bg-[#0E0E0E] text-[#FAF7F3] selection:bg-[#FAF7F3] selection:text-[#111111]">
       {/* Dynamic Twinkling Particle Canvas with Black & White Shifting Gradient */}
       <DynamicParticleBackground />
 

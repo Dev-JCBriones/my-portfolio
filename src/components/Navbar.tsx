@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, Search, Sun, Moon, Volume2, VolumeX, FileText, X, Menu } from 'lucide-react';
+import { ArrowUpRight, Search, Volume2, VolumeX, FileText, X, Menu } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import brandLogoDark from '../assets/images/brand_logo_dark.png';
 
@@ -11,8 +11,6 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
   const { 
-    theme, 
-    toggleTheme, 
     soundEnabled, 
     toggleSound, 
     playSound, 
@@ -137,19 +135,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
               )}
             </button>
 
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              title={`Switch to ${theme === 'dark' ? 'Sand' : 'Dark'} theme`}
-              className="p-1.5 sm:p-2 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 hover:text-white transition-colors cursor-pointer"
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-3.5 h-3.5 text-amber-300" />
-              ) : (
-                <Moon className="w-3.5 h-3.5 text-white/70" />
-              )}
-            </button>
-
             {/* Resume CV Button */}
             <button
               onClick={() => {
@@ -172,20 +157,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
             </button>
           </div>
 
-          {/* Mobile Right Controls: Only Theme + Hamburger Toggle */}
+          {/* Mobile Right Controls: Hamburger Toggle */}
           <div className="flex md:hidden items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              title="Toggle theme"
-              className="p-2 rounded-lg bg-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-amber-300" />
-              ) : (
-                <Moon className="w-4 h-4 text-white/80" />
-              )}
-            </button>
-
             <button
               onClick={() => {
                 playSound('click');

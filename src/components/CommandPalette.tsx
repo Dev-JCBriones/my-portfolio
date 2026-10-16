@@ -4,8 +4,6 @@ import {
   Search, 
   Terminal, 
   FileText, 
-  Sun, 
-  Moon, 
   Volume2, 
   VolumeX, 
   Mail, 
@@ -35,8 +33,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) =>
   const { 
     searchOpen, 
     setSearchOpen, 
-    theme, 
-    toggleTheme, 
     soundEnabled, 
     toggleSound, 
     playSound, 
@@ -171,16 +167,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) =>
         setResumeOpen(true);
       }
     },
-    {
-      id: 'act-theme',
-      title: `Switch to ${theme === 'dark' ? 'Sand / Editorial' : 'Obsidian Dark'} Theme`,
-      category: 'Actions',
-      icon: theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />,
-      action: () => {
-        toggleTheme();
-        setSearchOpen(false);
-      }
-    },
+
     {
       id: 'act-sound',
       title: `Turn Audio Micro-haptics ${soundEnabled ? 'OFF' : 'ON'}`,

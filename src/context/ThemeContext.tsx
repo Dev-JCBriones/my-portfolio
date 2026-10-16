@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type Theme = 'sand' | 'dark';
+type Theme = 'dark';
 
 interface ThemeContextType {
   theme: Theme;
@@ -19,10 +19,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const saved = localStorage.getItem('devjc_theme');
-    return saved === 'dark' ? 'dark' : 'sand';
-  });
+  const theme: Theme = 'dark';
 
   const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
     return localStorage.getItem('devjc_sound') === 'true';
@@ -33,14 +30,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [bookingOpen, setBookingOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('devjc_theme', theme);
-    const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-  }, [theme]);
+    localStorage.setItem('devjc_theme', 'dark');
+    document.documentElement.classList.add('dark');
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('devjc_sound', soundEnabled.toString());
@@ -117,8 +109,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const toggleTheme = () => {
-    playSound('switch');
-    setTheme((prev) => (prev === 'sand' ? 'dark' : 'sand'));
+    // Theme is permanently locked to dark theme
   };
 
   const toggleSound = () => {

@@ -1,14 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, MotionValue } from 'motion/react';
 import { Sparkles, RotateCcw, Compass, ArrowDown, CheckCircle2 } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
 
 interface WordProps {
   word: string;
   index: number;
   totalWords: number;
   progress: MotionValue<number>;
-  isDark: boolean;
   replayActive: boolean;
   replayProgress: number;
 }
@@ -18,7 +16,6 @@ const Word: React.FC<WordProps> = ({
   index,
   totalWords,
   progress,
-  isDark,
   replayActive,
   replayProgress,
 }) => {
@@ -32,7 +29,7 @@ const Word: React.FC<WordProps> = ({
   const scrollOpacity = useTransform(
     progress,
     [start, end],
-    [isDark ? 0.18 : 0.22, 1],
+    [0.18, 1],
     { clamp: true }
   );
   const scrollY = useTransform(
@@ -50,9 +47,7 @@ const Word: React.FC<WordProps> = ({
       {/* Background silhouette so text structure is always legible */}
       <span
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 select-none transition-opacity duration-300 ${
-          isDark ? 'text-white/15' : 'text-black/15'
-        }`}
+        className="pointer-events-none absolute inset-0 select-none transition-opacity duration-300 text-white/15"
       >
         {word}
       </span>
@@ -62,7 +57,7 @@ const Word: React.FC<WordProps> = ({
         style={
           replayActive
             ? {
-                opacity: isReplayLit ? 1 : isDark ? 0.18 : 0.22,
+                opacity: isReplayLit ? 1 : 0.18,
                 transform: isReplayLit ? 'translateY(0px)' : 'translateY(4px)',
                 transition: 'opacity 0.2s ease, transform 0.2s ease',
               }
@@ -71,9 +66,7 @@ const Word: React.FC<WordProps> = ({
                 y: scrollY,
               }
         }
-        className={`inline-block font-medium tracking-tight gusev-word transition-colors duration-200 hover:text-amber-400 cursor-default ${
-          isDark ? 'text-[#FAF7F3]' : 'text-[#111111]'
-        }`}
+        className="inline-block font-medium tracking-tight gusev-word transition-colors duration-200 hover:text-amber-400 cursor-default text-[#FAF7F3]"
       >
         {word}
       </motion.span>
@@ -82,8 +75,6 @@ const Word: React.FC<WordProps> = ({
 };
 
 export const QuoteSection: React.FC = () => {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
   const textContainerRef = useRef<HTMLDivElement>(null);
 
   // Raw text manifesto
@@ -202,7 +193,6 @@ export const QuoteSection: React.FC = () => {
               index={index}
               totalWords={totalWords}
               progress={scrollYProgress}
-              isDark={isDark}
               replayActive={replayActive}
               replayProgress={replayProgress}
             />
