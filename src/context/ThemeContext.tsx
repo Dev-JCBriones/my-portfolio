@@ -14,6 +14,8 @@ interface ThemeContextType {
   setResumeOpen: (open: boolean) => void;
   bookingOpen: boolean;
   setBookingOpen: (open: boolean) => void;
+  mobileMenuOpen: boolean;
+  setMobileMenuOpen: (open: boolean) => void;
   toast: { message: string; type?: 'check' | 'copy' | 'info' } | null;
   showToast: (message: string, type?: 'check' | 'copy' | 'info') => void;
 }
@@ -30,6 +32,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [searchOpen, setSearchOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState<{ message: string; type?: 'check' | 'copy' | 'info' } | null>(null);
 
   useEffect(() => {
@@ -60,6 +63,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setSearchOpen(false);
         setResumeOpen(false);
         setBookingOpen(false);
+        setMobileMenuOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -150,6 +154,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setResumeOpen,
         bookingOpen,
         setBookingOpen,
+        mobileMenuOpen,
+        setMobileMenuOpen,
         toast,
         showToast,
       }}

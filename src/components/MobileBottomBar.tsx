@@ -4,7 +4,7 @@ import { Calendar, Mail, Search, ArrowUp } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 export const MobileBottomBar: React.FC<{ onContactClick: () => void }> = ({ onContactClick }) => {
-  const { setBookingOpen, setSearchOpen, playSound, bookingOpen, resumeOpen, searchOpen } = useTheme();
+  const { setBookingOpen, setSearchOpen, playSound, bookingOpen, resumeOpen, searchOpen, mobileMenuOpen } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -16,8 +16,8 @@ export const MobileBottomBar: React.FC<{ onContactClick: () => void }> = ({ onCo
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Hide if any modal is active
-  if (bookingOpen || resumeOpen || searchOpen) return null;
+  // Hide if any modal or mobile navigation menu is active
+  if (bookingOpen || resumeOpen || searchOpen || mobileMenuOpen) return null;
 
   return (
     <AnimatePresence>

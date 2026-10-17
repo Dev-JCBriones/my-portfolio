@@ -4,7 +4,7 @@ import { ArrowUp } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 export const ScrollToTop: React.FC = () => {
-  const { playSound } = useTheme();
+  const { playSound, mobileMenuOpen, bookingOpen, resumeOpen, searchOpen } = useTheme();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -33,6 +33,9 @@ export const ScrollToTop: React.FC = () => {
   const radius = 16;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (scrollProgress / 100) * circumference;
+
+  // Hide if menu or any modal is open
+  if (mobileMenuOpen || bookingOpen || resumeOpen || searchOpen) return null;
 
   return (
     <AnimatePresence>

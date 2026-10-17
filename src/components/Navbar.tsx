@@ -16,10 +16,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
     playSound, 
     setSearchOpen, 
     setResumeOpen,
-    showToast 
+    showToast,
+    mobileMenuOpen,
+    setMobileMenuOpen
   } = useTheme();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = mobileMenuOpen;
+  const setIsOpen = setMobileMenuOpen;
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero-section');
 
