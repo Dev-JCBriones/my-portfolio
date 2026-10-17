@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowUpRight, ArrowUp, Clock } from 'lucide-react';
+import { ArrowUpRight, Clock } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { bioData } from '../data/portfolioData';
 
@@ -22,13 +22,8 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
     { label: 'Contact', view: 'home' as const, id: 'contact' },
   ];
 
-  const scrollToTop = () => {
-    playSound('click');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
-    <footer className="relative bg-[#111111] dark:bg-[#0A0A0A] text-[#FAF7F3] pt-20 pb-12 px-4 sm:px-6 mt-20 border-t border-white/10 overflow-hidden">
+    <footer className="relative bg-[#111111] dark:bg-[#0A0A0A] text-[#FAF7F3] pt-20 pb-28 sm:pb-16 px-4 sm:px-6 mt-20 border-t border-white/10 overflow-hidden">
       <div className="max-w-6xl mx-auto flex flex-col justify-between">
         {/* Top Row: Tagline + Quicklinks + Contact */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-white/10">
@@ -103,16 +98,6 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
             <p className="text-xs text-[#FAF7F3]/50 pt-1 leading-relaxed">
               Based in Bulacan, Philippines. Available for remote engineering contracts, system architecture consulting, and full-time senior backend roles.
             </p>
-
-            <div className="pt-3">
-              <button
-                onClick={scrollToTop}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-xs text-white/70 hover:text-white transition-colors cursor-pointer"
-              >
-                <ArrowUp className="w-3.5 h-3.5" />
-                <span>Back to Top</span>
-              </button>
-            </div>
           </div>
         </div>
 

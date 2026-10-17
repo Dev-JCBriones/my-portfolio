@@ -747,10 +747,8 @@ export const testimonialsData = [
 ];
 
 export const socialLinks = [
-  { name: "X", url: "https://x.com/" },
-  { name: "Instagram", url: "https://www.instagram.com/" },
   { name: "LinkedIn", url: "https://www.linkedin.com/" },
-  { name: "YouTube", url: "https://www.youtube.com/" }
+  { name: "GitHub", url: "https://github.com/SEJcdev" }
 ];
 
 export const deliveryStandardsData: DeliveryStandard[] = [
