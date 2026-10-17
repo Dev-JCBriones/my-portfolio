@@ -748,7 +748,7 @@ export const testimonialsData = [
 
 export const socialLinks = [
   { name: "LinkedIn", url: "https://www.linkedin.com/" },
-  { name: "GitHub", url: "https://github.com/SEJcdev" }
+  { name: "GitHub", url: "https://github.com/Dev-JCBriones" }
 ];
 
 export const deliveryStandardsData: DeliveryStandard[] = [
