@@ -17,6 +17,7 @@ export const ResumeModal: React.FC = () => {
 JOHN CARLO BRIONES (Dev JC)
 Software Engineer | Backend & Full-Stack Specialist
 Email: ${bioData.email} | Location: ${bioData.location}
+LinkedIn: https://www.linkedin.com/in/jcbrns | GitHub: https://github.com/Dev-JCBriones
 Current Company: TeleworkX.AI
 
 PROFESSIONAL SUMMARY:
@@ -145,16 +146,26 @@ Tech: ${exp.technologies.join(', ')}
                     <span>{bioData.location}</span>
                   </span>
                   
-                  <span className="hidden sm:inline opacity-30">•</span>
-                  
                   <a
-                    href="https://app.teleworkx.ai/login"
+                    href="https://www.linkedin.com/in/jcbrns"
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 hover:underline text-[#111111]/90 dark:text-[#FAF7F3]/90"
                   >
                     <ExternalLink className="w-3.5 h-3.5 opacity-70 shrink-0" />
-                    <span>app.teleworkx.ai</span>
+                    <span>linkedin.com/in/jcbrns</span>
+                  </a>
+
+                  <span className="hidden sm:inline opacity-30">•</span>
+
+                  <a
+                    href="https://github.com/Dev-JCBriones"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 hover:underline text-[#111111]/90 dark:text-[#FAF7F3]/90"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 opacity-70 shrink-0" />
+                    <span>github.com/Dev-JCBriones</span>
                   </a>
                 </div>
               </div>

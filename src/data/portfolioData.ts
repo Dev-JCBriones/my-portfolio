@@ -747,7 +747,7 @@ export const testimonialsData = [
 ];
 
 export const socialLinks = [
-  { name: "LinkedIn", url: "https://www.linkedin.com/" },
+  { name: "LinkedIn", url: "https://www.linkedin.com/in/jcbrns" },
   { name: "GitHub", url: "https://github.com/Dev-JCBriones" }
 ];
 
