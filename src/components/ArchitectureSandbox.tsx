@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Terminal, Play, Copy, Check, Server, Clock, ShieldCheck, ArrowRight, Zap, Code2, Database } from 'lucide-react';
 import { interactiveEndpoints } from '../data/portfolioData';
 import { useTheme } from '../context/ThemeContext';
+import { EnterpriseArchitectureCard } from './EnterpriseArchitectureCard';
 
 export const ArchitectureSandbox: React.FC = () => {
   const { playSound, showToast } = useTheme();
@@ -350,6 +351,9 @@ export const ArchitectureSandbox: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Enterprise PHP Architecture & Interactive UI Showcase Card */}
+      <EnterpriseArchitectureCard />
     </section>
   );
 };
